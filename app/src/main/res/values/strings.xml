@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Den Auto</string>
+    <string name="accessibility_description">Den Auto necesita este permiso para simular toques en el tablero de ajedrez automáticamente.</string>
+</resources>

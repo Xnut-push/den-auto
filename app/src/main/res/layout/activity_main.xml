@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#0e0b08">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="24dp"
+        android:gravity="center_horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="♟ DEN AUTO"
+            android:textColor="#e8b84b"
+            android:textSize="28sp"
+            android:letterSpacing="0.15"
+            android:layout_marginTop="40dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Bot de ajedrez automático"
+            android:textColor="#7a6040"
+            android:textSize="12sp"
+            android:layout_marginBottom="40dp"/>
+
+        <TextView
+            android:id="@+id/statusText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="⚠ Verifica los permisos"
+            android:textColor="#f0c030"
+            android:textSize="14sp"
+            android:gravity="center"
+            android:padding="12dp"
+            android:background="#1Af0c030"
+            android:layout_marginBottom="24dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="JUEGO CON"
+            android:textColor="#c8952e"
+            android:textSize="11sp"
+            android:layout_marginBottom="8dp"/>
+
+        <Switch
+            android:id="@+id/colorToggle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Juego con ♔ Blancas"
+            android:textColor="#ede0c8"
+            android:textSize="16sp"
+            android:layout_marginBottom="24dp"/>
+
+        <TextView
+            android:id="@+id/eloLabel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="ELO: 1500"
+            android:textColor="#c8952e"
+            android:textSize="11sp"
+            android:layout_marginBottom="8dp"/>
+
+        <SeekBar
+            android:id="@+id/eloSlider"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:max="30"
+            android:progress="9"
+            android:progressTint="#e8b84b"
+            android:thumbTint="#e8b84b"
+            android:layout_marginBottom="32dp"/>
+
+        <Button
+            android:id="@+id/accessBtn"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:text="⚙ Abrir Accesibilidad"
+            android:textColor="#5aa0f0"
+            android:background="#1A5aa0f0"
+            android:layout_marginBottom="12dp"/>
+
+        <Button
+            android:id="@+id/startBtn"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:text="▶ INICIAR BOT"
+            android:textColor="#4dde72"
+            android:background="#1A4dde72"/>
+
+    </LinearLayout>
+</ScrollView>
