@@ -1,26 +1,15 @@
 package com.denauto
 
 import android.os.HandlerThread
-import java.io.*
 
 class StockfishEngine : HandlerThread("Stockfish") {
 
-    private var process: Process? = null
-    private var writer: PrintWriter? = null
-    private var reader: BufferedReader? = null
+    @Volatile var isReady = false
 
     override fun start() {
         super.start()
-        try {
-            // Use chesslib for move generation instead of native Stockfish binary
-            // Since we can't bundle a binary in debug APK without NDK, use Java engine
-            isReady = true
-        } catch(e: Exception) {
-            e.printStackTrace()
-        }
+        isReady = true
     }
-
-    @Volatile var isReady = false
 
     fun getBestMove(fen: String, elo: Int): String? {
         return try {
@@ -29,7 +18,6 @@ class StockfishEngine : HandlerThread("Stockfish") {
             val moves = board.legalMoves()
             if(moves.isEmpty()) return null
 
-            // Score moves using simple evaluation
             val scored = moves.map { move ->
                 val copy = com.github.bhlangonijr.chesslib.Board()
                 copy.loadFromFen(fen)
@@ -38,9 +26,8 @@ class StockfishEngine : HandlerThread("Stockfish") {
                 Pair(move, score)
             }.sortedByDescending { it.second }
 
-            // Add randomness based on ELO (lower ELO = more random)
             val topN = when {
-                elo < 800 -> scored.size.coerceAtLeast(1)
+                elo < 800  -> scored.size.coerceAtLeast(1)
                 elo < 1200 -> (scored.size / 2).coerceAtLeast(1)
                 elo < 1800 -> (scored.size / 3).coerceAtLeast(1)
                 elo < 2400 -> 2.coerceAtLeast(1)
@@ -57,12 +44,12 @@ class StockfishEngine : HandlerThread("Stockfish") {
 
     private fun evaluate(board: com.github.bhlangonijr.chesslib.Board, side: com.github.bhlangonijr.chesslib.Side): Int {
         val pieceValues = mapOf(
-            com.github.bhlangonijr.chesslib.PieceType.PAWN to 100,
+            com.github.bhlangonijr.chesslib.PieceType.PAWN   to 100,
             com.github.bhlangonijr.chesslib.PieceType.KNIGHT to 320,
             com.github.bhlangonijr.chesslib.PieceType.BISHOP to 330,
-            com.github.bhlangonijr.chesslib.PieceType.ROOK to 500,
-            com.github.bhlangonijr.chesslib.PieceType.QUEEN to 900,
-            com.github.bhlangonijr.chesslib.PieceType.KING to 20000
+            com.github.bhlangonijr.chesslib.PieceType.ROOK   to 500,
+            com.github.bhlangonijr.chesslib.PieceType.QUEEN  to 900,
+            com.github.bhlangonijr.chesslib.PieceType.KING   to 20000
         )
         var score = 0
         for(sq in com.github.bhlangonijr.chesslib.Square.values()) {
@@ -72,13 +59,11 @@ class StockfishEngine : HandlerThread("Stockfish") {
             val value = pieceValues[piece.pieceType] ?: 0
             score += if(piece.pieceSide == side) value else -value
         }
-        // Mobility bonus
         score += board.legalMoves().size * 5
         return score
     }
 
     override fun quit(): Boolean {
-        process?.destroy()
-        quitSafely()
+        return quitSafely()
     }
 }
