@@ -77,7 +77,7 @@ class StockfishEngine : HandlerThread("Stockfish") {
         return score
     }
 
-    fun quit() {
+    override fun quit() {
         process?.destroy()
         quitSafely()
     }
